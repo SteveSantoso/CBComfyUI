@@ -31,13 +31,13 @@ CBComfyUI 是一个 Unreal Engine 插件，用于把 ComfyUI 工作流接入 UE 
 
 ## 仓库中的示例资源
 
-- 示例工作流： (https://github.com/SteveSantoso/CBComfyUI/blob/main/Plugins/CBComfyUI/Resources/%E5%B7%A5%E4%BD%9C%E6%B5%81.json)
-- 工作流详细说明： (https://github.com/SteveSantoso/CBComfyUI/blob/main/Plugins/CBComfyUI/Resources/%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md)
-- Manager 蓝图入口：(https://github.com/SteveSantoso/CBComfyUI/blob/main/Plugins/CBComfyUI/Source/CBComfyUI/Public/CBComfyUIManager.h)
-- Scene Capture 入口： (https://github.com/SteveSantoso/CBComfyUI/blob/main/Plugins/CBComfyUI/Source/CBComfyUI/Public/CBComfyUISceneCaptureComponent.h)
-- 蓝图工具函数： (https://github.com/SteveSantoso/CBComfyUI/blob/main/Plugins/CBComfyUI/Source/CBComfyUI/Public/CBComfyUIBlueprintLibrary.h)
+- 示例工作流： [Resources/工作流.json](Resources/工作流.json)
+- 工作流详细说明： [Resources/工作流使用说明.md](Resources/工作流使用说明.md)
+- Manager 蓝图入口： [Source/CBComfyUI/Public/CBComfyUIManager.h](Source/CBComfyUI/Public/CBComfyUIManager.h)
+- Scene Capture 入口： [Source/CBComfyUI/Public/CBComfyUISceneCaptureComponent.h](Source/CBComfyUI/Public/CBComfyUISceneCaptureComponent.h)
+- 蓝图工具函数： [Source/CBComfyUI/Public/CBComfyUIBlueprintLibrary.h](Source/CBComfyUI/Public/CBComfyUIBlueprintLibrary.h)
 
-需要注意的是，仓库里的 工作流.json 是可直接提交给 ComfyUI `/prompt` 接口的 prompt JSON，不是前端画布布局 JSON。
+需要注意的是，仓库里的 [Resources/工作流.json](Resources/工作流.json) 是可直接提交给 ComfyUI `/prompt` 接口的 prompt JSON，不是前端画布布局 JSON。
 
 ## 环境要求
 
@@ -207,3 +207,15 @@ ControlNet 推荐直接在模型页的 Files 页面下载与你工作流匹配�
 
 - 直接重命名模型文件
 - 修改工作流对应节点里的文件名字段
+
+## 代码入口
+
+如果你要继续扩展插件，优先看这几个文件：
+
+- [Source/CBComfyUI/Public/CBComfyUIManager.h](Source/CBComfyUI/Public/CBComfyUIManager.h)
+- [Source/CBComfyUI/Private/CBComfyUIManager.cpp](Source/CBComfyUI/Private/CBComfyUIManager.cpp)
+- [Source/CBComfyUI/Public/CBComfyUISceneCaptureComponent.h](Source/CBComfyUI/Public/CBComfyUISceneCaptureComponent.h)
+- [Source/CBComfyUI/Private/CBComfyUISceneCaptureComponent.cpp](Source/CBComfyUI/Private/CBComfyUISceneCaptureComponent.cpp)
+- [Source/CBComfyUI/Public/CBComfyUIBlueprintLibrary.h](Source/CBComfyUI/Public/CBComfyUIBlueprintLibrary.h)
+
+如果你只想直接跑通仓库里的示例流程，建议先看 [Resources/工作流使用说明.md](Resources/工作流使用说明.md)。
