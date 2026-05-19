@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBComfyUI Poster</title>
+    <style>
+        :root {
+            --bg: #f2ebdf;
+            --ink: #10222b;
+            --muted: rgba(16, 34, 43, 0.68);
+            --panel: rgba(255, 255, 255, 0.78);
+            --panel-strong: rgba(255, 255, 255, 0.92);
+            --line: rgba(16, 34, 43, 0.12);
+            --teal-900: #0e3c43;
+            --teal-700: #16626b;
+            --teal-500: #2fa6a1;
+            --orange: #f96f3b;
+            --lime: #d9ee71;
+            --cream: #fff7ea;
+            --shadow: 0 28px 60px rgba(16, 34, 43, 0.16);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 1920px;
+            height: 1080px;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        body {
+            position: relative;
+            font-family: "Aptos", "Segoe UI", sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 16% 12%, rgba(249, 111, 59, 0.26), transparent 18%),
+                radial-gradient(circle at 88% 14%, rgba(47, 166, 161, 0.26), transparent 21%),
+                radial-gradient(circle at 78% 72%, rgba(217, 238, 113, 0.22), transparent 18%),
+                linear-gradient(180deg, #f7f0e4 0%, #efe6d8 100%);
+        }
+
+        body::before,
+        body::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        body::before {
+            background:
+                linear-gradient(rgba(16, 34, 43, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16, 34, 43, 0.035) 1px, transparent 1px);
+            background-size: 44px 44px;
+            mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 92%);
+        }
+
+        body::after {
+            background:
+                radial-gradient(circle at 10% 84%, rgba(14, 60, 67, 0.16), transparent 18%),
+                radial-gradient(circle at 94% 84%, rgba(249, 111, 59, 0.14), transparent 16%);
+        }
+
+        .poster {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding: 34px;
+            display: grid;
+            grid-template-rows: auto auto auto;
+            gap: 16px;
+            align-content: space-between;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 18px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(16, 34, 43, 0.08);
+            box-shadow: 0 10px 30px rgba(16, 34, 43, 0.08);
+        }
+
+        .brand-mark {
+            width: 16px;
+            height: 16px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, var(--orange), var(--teal-500));
+            box-shadow: 16px 0 0 rgba(16, 98, 107, 0.28), 32px 0 0 rgba(217, 238, 113, 0.68);
+            margin-right: 32px;
+        }
+
+        .brand-text {
+            font-family: "Bahnschrift", "Trebuchet MS", sans-serif;
+            font-size: 20px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .top-note {
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: rgba(16, 34, 43, 0.86);
+            color: white;
+            font-size: 14px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.18fr 0.82fr;
+            gap: 16px;
+        }
+
+        .hero-copy,
+        .hero-visual,
+        .feature-card,
+        .pipeline,
+        .callout {
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(14px);
+        }
+
+        .hero-copy {
+            position: relative;
+            padding: 28px;
+            border-radius: 28px;
+            background: linear-gradient(180deg, var(--panel-strong), rgba(255, 255, 255, 0.7));
+            overflow: hidden;
+        }
+
+        .hero-copy::before {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            top: -70px;
+            right: -30px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(249, 111, 59, 0.26), transparent 70%);
+        }
+
+        .eyebrow {
+            margin-bottom: 14px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--teal-700);
+        }
+
+        h1 {
+            margin: 0;
+            font-family: "Bahnschrift", "Trebuchet MS", sans-serif;
+            font-size: 84px;
+            line-height: 0.9;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-copy strong {
+            display: inline-block;
+            color: var(--orange);
+        }
+
+        .lead {
+            margin: 18px 0 0;
+            max-width: 560px;
+            font-size: 21px;
+            line-height: 1.48;
+            color: var(--ink);
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .pill {
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(16, 98, 107, 0.08);
+            border: 1px solid rgba(16, 98, 107, 0.1);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--teal-900);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .stat {
+            padding: 14px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.76);
+            border: 1px solid rgba(16, 34, 43, 0.08);
+        }
+
+        .stat-value {
+            font-family: "Bahnschrift", "Trebuchet MS", sans-serif;
+            font-size: 30px;
+            line-height: 1;
+            color: var(--teal-900);
+        }
+
+        .stat-label {
+            margin-top: 6px;
+            font-size: 13px;
+            line-height: 1.35;
+            color: var(--muted);
+        }
+
+        .hero-visual {
+            position: relative;
+            padding: 22px;
+            border-radius: 28px;
+            background: linear-gradient(160deg, #0f434b 0%, #16626b 62%, #1f7882 100%);
+            color: white;
+            overflow: hidden;
+        }
+
+        .hero-visual::before {
+            content: "";
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            right: -70px;
+            top: -70px;
+            border-radius: 26px;
+            transform: rotate(25deg);
+            background: linear-gradient(135deg, rgba(249, 111, 59, 0.42), transparent 68%);
+        }
+
+        .visual-title {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.78);
+        }
+
+        .flow {
+            display: grid;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .flow-step {
+            display: grid;
+            grid-template-columns: 44px 1fr;
+            gap: 10px;
+            align-items: start;
+            padding: 12px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .step-no {
+            display: grid;
+            place-items: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: var(--lime);
+            color: var(--teal-900);
+            font-family: "Bahnschrift", "Trebuchet MS", sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .step-title {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .step-copy {
+            margin: 4px 0 0;
+            font-size: 13px;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .tag {
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.82);
+        }
+
+        .preview-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .preview-card {
+            padding: 12px;
+            border-radius: 18px;
+            background: rgba(8, 24, 30, 0.24);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .preview-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.62);
+        }
+
+        .map-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .map-chip,
+        .mesh-card {
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            min-height: 58px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .map-chip.depth { background: linear-gradient(135deg, #bde6ff, #6d8ca8); color: #173447; }
+        .map-chip.normals { background: linear-gradient(135deg, #7be7cf, #157472); color: #0d2b2e; }
+        .map-chip.color { background: linear-gradient(135deg, #ffb998, #f96f3b); color: #4a160a; }
+        .map-chip.edge { background: linear-gradient(135deg, #f2f3ec, #8fa08e); color: #20302d; }
+
+        .mesh-card {
+            margin-top: 10px;
+            min-height: 114px;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.7), transparent 18%),
+                linear-gradient(135deg, rgba(249, 111, 59, 0.9), rgba(47, 166, 161, 0.9));
+        }
+
+        .mesh-card::before,
+        .mesh-card::after {
+            content: "";
+            position: absolute;
+            border: 2px solid rgba(255, 255, 255, 0.56);
+            transform: rotate(45deg);
+        }
+
+        .mesh-card::before {
+            width: 60px;
+            height: 60px;
+            left: 20px;
+            top: 26px;
+        }
+
+        .mesh-card::after {
+            width: 92px;
+            height: 92px;
+            right: 18px;
+            bottom: 8px;
+        }
+
+        .mesh-text {
+            position: absolute;
+            left: 12px;
+            bottom: 10px;
+            padding: 6px 8px;
+            border-radius: 999px;
+            background: rgba(12, 34, 42, 0.72);
+            color: white;
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .feature-card {
+            padding: 20px;
+            border-radius: 24px;
+            background: var(--panel);
+        }
+
+        .feature-kicker {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--teal-700);
+        }
+
+        .feature-title {
+            margin: 10px 0 8px;
+            font-family: "Bahnschrift", "Trebuchet MS", sans-serif;
+            font-size: 26px;
+            line-height: 1.02;
+        }
+
+        .feature-copy {
+            margin: 0;
+            font-size: 17px;
+            line-height: 1.42;
+            color: var(--ink);
+        }
+
+        .feature-line {
+            margin-top: 12px;
+            height: 6px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--teal-500), var(--orange), var(--lime));
+        }
+
+        .note-bar {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr 1fr;
+            gap: 14px;
+        }
+
+        .note {
+            padding: 16px 18px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.76);
+            border: 1px solid rgba(16, 34, 43, 0.08);
+            box-shadow: 0 18px 40px rgba(16, 34, 43, 0.1);
+        }
+
+        .note-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--teal-700);
+        }
+
+        .note-copy {
+            margin: 8px 0 0;
+            font-family: "Bahnschrift", "Trebuchet MS", sans-serif;
+            font-size: 16px;
+            line-height: 1.32;
+            color: var(--ink);
+        }
+
+        .note.warning {
+            background: rgba(249, 111, 59, 0.12);
+        }
+    </style>
+</head>
+<body>
+    <main class="poster">
+        <section class="topbar">
+            <div class="brand">
+                <span class="brand-mark" aria-hidden="true"></span>
+                <span class="brand-text">CBComfyUI</span>
+            </div>
+            <div class="top-note">UE Scene to ComfyUI Workflow</div>
+        </section>
+
+        <section class="hero">
+            <article class="hero-copy">
+                <div class="eyebrow">Plugin Poster / Web Export</div>
+                <h1>让场景<br><strong>直接出图</strong></h1>
+                <p class="lead">CBComfyUI 把 Unreal 场景采集、ComfyUI 提交和材质回写接成一条闭环。编辑器可用，Runtime 也能跑。</p>
+                <div class="pill-row">
+                    <span class="pill">Scene Capture</span>
+                    <span class="pill">Workflow JSON</span>
+                    <span class="pill">Material Writeback</span>
+                </div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">depth / normals / color / edge_mask</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">2</div>
+                        <div class="stat-label">Editor + Runtime 双模式</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">BP</div>
+                        <div class="stat-label">蓝图可直接接入生成流程</div>
+                    </div>
+                </div>
+            </article>
+
+            <aside class="hero-visual">
+                <div class="visual-title">Core Loop</div>
+                <div class="flow">
+                    <div class="flow-step">
+                        <div class="step-no">01</div>
+                        <div>
+                            <h2 class="step-title">采集场景控制图</h2>
+                            <p class="step-copy">生成深度、法线、颜色和边缘遮罩。</p>
+                            <div class="tag-row">
+                                <span class="tag">Depth</span>
+                                <span class="tag">Normals</span>
+                                <span class="tag">Color</span>
+                                <span class="tag">Edge Mask</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-no">02</div>
+                        <div>
+                            <h2 class="step-title">提交工作流 JSON</h2>
+                            <p class="step-copy">支持文件或字符串提交，也能在发送前修改节点参数。</p>
+                            <div class="tag-row">
+                                <span class="tag">Prompt</span>
+                                <span class="tag">Steps</span>
+                                <span class="tag">Guidance</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-no">03</div>
+                        <div>
+                            <h2 class="step-title">下载结果并回写材质</h2>
+                            <p class="step-copy">监听输出文件名，下载结果图并写入 BaseColor。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="preview-row">
+                    <div class="preview-card">
+                        <div class="preview-label">Capture Maps</div>
+                        <div class="map-grid">
+                            <div class="map-chip depth">depth</div>
+                            <div class="map-chip normals">normals</div>
+                            <div class="map-chip color">color</div>
+                            <div class="map-chip edge">edge_mask</div>
+                        </div>
+                    </div>
+                    <div class="preview-card">
+                        <div class="preview-label">Live Writeback</div>
+                        <div class="mesh-card">
+                            <div class="mesh-text">BaseColor Updated</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </section>
+
+        <section class="feature-grid">
+            <article class="feature-card">
+                <div class="feature-kicker">Feature 01</div>
+                <h2 class="feature-title">蓝图直连</h2>
+                <p class="feature-copy">Manager 负责连接与输出事件，Scene Capture 负责上传和回写。</p>
+                <div class="feature-line"></div>
+            </article>
+            <article class="feature-card">
+                <div class="feature-kicker">Feature 02</div>
+                <h2 class="feature-title">双模式运行</h2>
+                <p class="feature-copy">PrepareActorsAuto 自动切换到编辑器资源或 Runtime 动态资源。</p>
+                <div class="feature-line"></div>
+            </article>
+            <article class="feature-card">
+                <div class="feature-kicker">Feature 03</div>
+                <h2 class="feature-title">参数热调</h2>
+                <p class="feature-copy">可在 UE 内改 prompt、steps、guidance 和 ControlNet strength。</p>
+                <div class="feature-line"></div>
+            </article>
+        </section>
+
+        <section class="note-bar">
+            <article class="note">
+                <div class="note-title">Runtime</div>
+                <div class="note-copy">打包版建议先调 ConfigureForRuntime，再优先走 QueueWorkflowFromString。</div>
+            </article>
+            <article class="note warning">
+                <div class="note-title">Required</div>
+                <div class="note-copy">参与回写的 Static Mesh 必须开启 Allow CPU Access。</div>
+            </article>
+            <article class="note">
+                <div class="note-title">Material</div>
+                <div class="note-copy">基础材质需要提供 BaseColor 纹理参数，结果图会写到这里。</div>
+            </article>
+        </section>
+    </main>
+</body>
+</html>
