@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # CBComfyUI
 
 CBComfyUI 是一个 Unreal Engine 插件，用于把 ComfyUI 工作流接入 UE 场景流程。插件会从场景中生成控制图，提交 prompt JSON 到 ComfyUI，接收生成结果，再把结果图回写到目标 Actor 的材质上。
